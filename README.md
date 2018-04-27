@@ -1,4 +1,12 @@
 # UWM-CS559-Computer-Graphics
 CS559 Computer Graphics using javascript, html and webgl
 
-<img src="hw2/SolarSystem.jpg" width = "60%" />
+Here are some examples:
+
+<img src="Show/hw3.jpg" width = "60%" />
+
+<img src="Show/hw4.jpg" width = "60%" />
+
+<img src="Show/hw5.jpg" width = "60%" />
+
+<img src="Show/project.jpg" width = "60%" />
