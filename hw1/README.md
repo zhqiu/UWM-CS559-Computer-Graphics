@@ -1,1 +1,1 @@
-Reading assignment #1 : Class logistics and introductory 2D concepts
+Programming Assignment #1 : Intro to HTML Canvas
