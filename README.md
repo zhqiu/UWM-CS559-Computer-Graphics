@@ -2,4 +2,4 @@
 CS559 Computer Graphics using javascript, html and webgl
 
 
-![avatar](1.png)
+![avatar](hw2/SolarSystem.png)
