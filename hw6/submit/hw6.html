@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta name="description" content="Spinning cube example">
+    <meta charset="utf-8">
+    <title>WebGL texturing w/mipmap example</title>
+
+    <script id="vs" type="not-js">
+      attribute vec3 vPosition;
+	  attribute vec3 vertNormal;
+      attribute vec2 vTexCoord;
+      varying vec2 fTexCoord;
+	  varying vec3 fPosition;
+      uniform mat4 mWorld;
+	  uniform mat4 mView;
+	  uniform mat4 mProj;
+	  uniform mat4 normalMatrix;
+	  varying vec3 fNormal;
+
+      void main(void){
+		vec4 pos = mView * mWorld * vec4(vPosition, 1.0);
+		fNormal = normalize(normalMatrix * vec4(vertNormal, 1.0)).xyz;
+		fTexCoord = vTexCoord;
+		fPosition = pos.xyz;
+		gl_Position = mProj * pos;
+      }
+    </script>
+
+    <script id="fs" type="not-js">
+      precision highp float;
+      varying vec2 fTexCoord;
+	  varying vec3 fNormal;
+	  varying vec3 fPosition;
+      uniform sampler2D texSampler;
+	  uniform float ca; 
+	  uniform float cd;
+	  uniform float cs;
+	  uniform float sExp;
+	  const vec3 lightPos = vec3(5.0, 2.0, 5.0);
+	  const vec3 lightCol = vec3(1.0, 1.0, 1.0);
+
+      void main(void) {
+		 vec3 l = normalize(lightPos);
+		 vec3 n = normalize(fNormal);
+         vec3 e = normalize(-fPosition);
+		 vec3 h = normalize(e+l);
+		 
+         vec4 texColor = texture2D(texSampler,fTexCoord);
+		 
+		 vec3 ambientCol  = ca * texColor.xyz;
+		 vec3 diffuseCol  = cd * texColor.xyz * dot(l,n);
+		 vec3 specularCol = cs * lightCol * pow(max(dot(h,n), 0.0), sExp);
+		 
+         gl_FragColor = vec4(ambientCol+diffuseCol+specularCol, texColor.a);
+      }
+    </script>
+	
+	<br/>
+		<i>Ambient Light:</i>
+		<input id="slider1" type="range" min="0" max="100">
+		<br/>
+		<i>Diffuse Light:</i>
+		<input id="slider2" type="range" min="0" max="100">
+		<br/>
+		<i>Specular Light(cs):</i>
+		<input id="slider3" type="range" min="0" max="100">
+		<br/>
+		<i>Specular Light(sExp):</i>
+		<input id="slider4" type="range" min="1" max="128">
+		<br/>
+
+  </head>
+
+  <body onload="start()">
+    <canvas id="mycanvas" width="500" height="500"></canvas><br>
+    <script src="http://graphics.cs.wisc.edu/JS/twgl-full.min.js"></script>
+	<script src="hw6.js"></script>
+  </body>
+
+</html>
